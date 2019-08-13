@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace ContractInstallment.Entities
 {
@@ -10,6 +11,12 @@ namespace ContractInstallment.Entities
         public Installment(DateTime dueDate, double amount){
             DueDate = dueDate;
             Amount =  amount;
+        }
+
+        public override string ToString(){
+            return DueDate.ToString("dd/MM/yyyy")
+                + " - "
+                + Amount.ToString("F2", CultureInfo.InvariantCulture);
         }
     }
 }

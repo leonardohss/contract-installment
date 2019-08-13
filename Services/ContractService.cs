@@ -13,14 +13,13 @@ namespace ContractInstallment.Services
          }
 
          public void ProcessContract(Contract contract, int months){
-             DateTime due = contract.Date;
-             double value = contract.TotalValue / months;
+             double basicQuota = contract.TotalValue / months;
 
              for(int x = 1; x <= months; x++){
-                 due = due.AddMonths(1);
-                 double amount = _onlinePaymentService.Interest(value, x);
-                 amount = _onlinePaymentService.PaymentFee(amount);
-                 contract.AddInstallment(due, amount);
+                 DateTime due = contract.Date.AddMonths(x);
+                 double updateQuota = basicQuota + _onlinePaymentService.Interest(basicQuota, x);
+                 double fullQuota = updateQuota + _onlinePaymentService.PaymentFee(updateQuota);
+                 contract.AddInstallment(new Installment(due, fullQuota));
              }
          }
     }

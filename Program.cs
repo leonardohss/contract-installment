@@ -15,7 +15,7 @@ namespace ContractInstallment
             Console.Write("Date (dd/MM/yyyy): ");
             DateTime date = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
             Console.Write("Contract Value: ");
-            double totalValue = double.Parse(Console.ReadLine());
+            double totalValue = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
             
             Console.Write("Enter number of installments: ");
             int months = int.Parse(Console.ReadLine());
@@ -27,7 +27,12 @@ namespace ContractInstallment
             contractService.ProcessContract(contract, months);
             
             Console.WriteLine("INSTALLMENTS: ");
-            Console.WriteLine(contract);
+
+            foreach (Installment item in contract.Installments)
+            {
+                Console.WriteLine(item);
+            }
+
         }
     }
 }
